@@ -6,8 +6,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -18,7 +20,7 @@ public class PostsRepositoryTest {
     PostsRepository postsRepository;
 
     @After
-    public void cleanup(){
+    public void cleanup() {
         postsRepository.deleteAll();
     }
 
@@ -41,5 +43,27 @@ public class PostsRepositoryTest {
         Posts posts = postsList.get(0);
         assertThat(posts.getTitle()).isEqualTo(title);
         assertThat(posts.getContent()).isEqualTo(content);
+    }
+    @Test
+    public void BaseTimeEntity_등록 () {
+        //given
+        LocalDateTime now = LocalDateTime.of(2021,11,11,0,0,0);
+        postsRepository.save(Posts.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+
+        //when
+        List<Posts> postsLists = postsRepository.findAll();
+
+        //then
+        Posts posts = postsLists.get(0);
+
+        System.out.println(">>>>>>createDate="+posts.getCreateDate()+", modifiedDate="+posts.getModifiedDated());
+
+        assertThat(posts.getCreateDate()).isAfter(now);
+        assertThat(posts.getModifiedDated()).isAfter(now);
+
     }
 }
