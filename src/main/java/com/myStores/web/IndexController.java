@@ -1,14 +1,17 @@
 package com.myStores.web;
 
-import com.myStores.domain.posts.PostsRepository;
+import com.myStores.config.auth.LoginUser;
+import com.myStores.config.auth.dto.SessionUser;
 import com.myStores.service.PostsService;
 import com.myStores.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
 
 
 @RequiredArgsConstructor
@@ -17,9 +20,14 @@ public class IndexController {
 
     private final PostsService postsService;
 
+
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, @LoginUser SessionUser user){
         model.addAttribute("posts",postsService.findAllDesc());
+
+        if(user != null){
+            model.addAttribute("userName",user.getName());
+        }
         return "index";
     }
 
