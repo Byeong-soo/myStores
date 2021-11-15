@@ -17,4 +17,4 @@ public @interface LoginUser {
 
 //@interface
 //이 파일을 어노테이션 클래스로 지정
-//LoginUser라는 이름ㅇ르 가진 어노테이션 생성
+//LoginUser라는 이름을 가진 어노테이션 생성
