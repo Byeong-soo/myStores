@@ -43,7 +43,7 @@ jobs:
       run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://mystores-build/$PROJECT_NAME/$GITHUB_SHA.zip
       
     - name: Code Deploy
-      run: aws deploy create-deployment --application-name myStores-webservice-group --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name develop --s3-location bucket=mystores-build,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
+      run: aws deploy create-deployment --application-name myStores-webservice --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name develop --s3-location bucket=mystores-build,bundleType=zip,key=$PROJECT_NAME/$GITHUB_SHA.zip
     
     
 
