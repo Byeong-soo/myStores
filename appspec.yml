@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ec2-user/app/step1/myStores/
+    destination: /home/ec2-user/app/step3/zip/
     overwrite: true
 
 permissions:
