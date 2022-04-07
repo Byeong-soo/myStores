@@ -15,8 +15,8 @@ public class GoodsApiController {
     private final GoodsService goodsService;
 
     @PostMapping("/api/v1/goods")
-    public Long save(){
-        return goodsService.countAll();
+    public String save(){
+        return String.valueOf(goodsService.countAll());
     }
 
 
