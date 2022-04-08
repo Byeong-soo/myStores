@@ -17,12 +17,5 @@ public class IndexControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Test
-    public void 메인페이지_로딩() {
-        //when
-        String body = this.restTemplate.getForObject("/",String.class);
 
-        //then
-        assertThat(body).contains("알림 서비스 feat.정윤 아이디어");
-    }
 }
