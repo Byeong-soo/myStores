@@ -1,6 +1,6 @@
 {{>layout/header}}
 
-<h1>알림 서비스 feat.정윤 아이디어 V.3</h1>
+<h1>시세 확인용 계산기</h1>
 <div class="col-md-12">
 <!--로그인 기능 영역-->
     <div class="row">
@@ -10,6 +10,10 @@
                 Logged in as : <span id="user">{{loginName}}</span>
             <a href="/logout" class="btn btn-info active" role="button">Logout</a>
             {{/loginName}}
+            {{#loginName}}
+                <a href="/gets/GoodsList" class="btn btn-info active" role="button">물건 조회</a>
+            {{/loginName}}
+
             {{^loginName}}
                 <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
                 <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">Naver Login</a>
