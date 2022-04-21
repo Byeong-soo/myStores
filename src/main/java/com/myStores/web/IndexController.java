@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequiredArgsConstructor
 @Controller
@@ -24,7 +25,8 @@ public class IndexController {
         if(user != null){
             model.addAttribute("loginName",user.getName());
         }
-        return "index";
+
+        return "/form/index";
     }
 
     @GetMapping("/posts/save")
