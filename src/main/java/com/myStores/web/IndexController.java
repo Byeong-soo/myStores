@@ -19,12 +19,12 @@ public class IndexController {
 
 
     @GetMapping("/")
-    public String index(Model model, @LoginUser SessionUser user){
-        model.addAttribute("posts",postsService.findAllDesc());
+    public String index(Model model){ //@LoginUser SessionUser user
+//        model.addAttribute("posts",postsService.findAllDesc());
 
-        if(user != null){
-            model.addAttribute("loginName",user.getName());
-        }
+//        if(user != null){
+//            model.addAttribute("loginName",user.getName());
+//        }
 
         return "/form/index";
     }
