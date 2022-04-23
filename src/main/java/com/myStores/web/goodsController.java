@@ -14,4 +14,9 @@ public class goodsController {
     public String searchForm(){
         return "form/goods/goodSearch";
     }
+
+    @GetMapping("/calculate")
+    public String calculateForm(){
+        return "form/goods/goodCalculate";
+    }
 }
