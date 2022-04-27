@@ -26,24 +26,24 @@ window.onload = function () {
 
     function checkNull() {
 
-        let inputList = ['goldMarketValue', 'goldMount', 'goldMargin', 'goldWage']
+        let inputList = ['goldMarketValue', 'goldMountValue', 'goldMarginValue', 'goldWageValue']
         let alertList = [];
         let valueList = [];
 
         inputList.forEach(function (value) {
-            let inputValue = getValue(value);
+            let inputValue = getValue(value).replaceAll(',','');
 
             switch (value) {
                 case 'goldMarketValue' :
                     value = '시세';
                     break;
-                case 'goldMount' :
+                case 'goldMountValue' :
                     value = '중량';
                     break;
-                case 'goldMargin' :
+                case 'goldMarginValue' :
                     value = '마진';
                     break;
-                case 'goldWage' :
+                case 'goldWageValue' :
                     value = '공임';
                     break;
             }
@@ -71,6 +71,8 @@ window.onload = function () {
         }
     }
 
+
+    //--------------------계산 ----------------------
 
     let calculateButton = document.getElementById("calculate");
 
@@ -111,12 +113,40 @@ window.onload = function () {
 
         return Math.ceil(goldPrice);
     }
+    //--------------------입력 제한 ----------------------
+    function inputControl(inputId) {
+        findInput(inputId).addEventListener("focusin", function (ev) {
+            let value = getValue(inputId);
+            pointCheck(ev, value);
+            if (ev.key === ',') {
+                ev.preventDefault();
+                return false;
+            }
 
-    function numberCheck(value) {
-        return value.replace(/[^.,0-9]/g, '');
+            findInput(inputId).value = value.replaceAll(',', '');
+            findInput(inputId).setAttribute('type', 'number');
+        })
+
+        findInput(inputId).addEventListener("focusout", function (ev) {
+            let value = getValue(inputId);
+            pointCheck(ev, value);
+
+            let numberCheckValue = numberCheck(value);
+            findInput(inputId).setAttribute('type', 'text');
+            findInput(inputId).value = numberCheckValue;
+        })
     }
 
-    function pointCheck(ev,value) {
+
+    function numberCheck(value) {
+        value = value.replaceAll(',', '');
+        value = value.replace(/[^.,0-9]/g, '');
+        let splitValue = value.split('.');
+        splitValue[0] = splitValue[0].replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+        return splitValue.join('.')
+    }
+
+    function pointCheck(ev, value) {
         if (ev.key === '.' && value.includes('.')) {
             ev.defaultPrevented;
             ev.preventDefault();
@@ -124,34 +154,22 @@ window.onload = function () {
         }
     }
 
-    findInput("goldMarketValue").addEventListener("keydown", function (ev) {
-        let value = getValue("goldMarketValue");
-        pointCheck(ev,value);
+    inputControl('goldMarketValue');
+    inputControl('goldMountValue');
+    inputControl('goldWageValue');
+    inputControl('goldMarginValue');
 
-        if(ev.key === ','){
-            ev.preventDefault();
-            return false;
-        }
+    // 초기화
 
-        let numberCheck1 = numberCheck(value);
-        findInput("goldMarketValue").value = numberCheck1;
+    document.getElementById('reset').addEventListener('click',function () {
+        resetInput('goldMountValue');
+        resetInput('goldWageValue');
+        resetInput('goldMarginValue');
     })
 
-    findInput("goldMarketValue").addEventListener("focusout", function () {
-        let value = getValue("goldMarketValue");
-
-        let numberCheck1 = numberCheck(value);
-        findInput("goldMarketValue").value = numberCheck1;
-    })
-
-
-    findInput('goldWage').addEventListener('focusin', function () {
-        findInput('goldWage').value = "200,000"
-    })
-
-    findInput('goldWage').addEventListener('focusout', function () {
-        findInput('goldWage').setAttribute("type", "text");
-    })
-
+    function resetInput(inputId) {
+        findInput(inputId).value = '';
+    }
 
 }
+
