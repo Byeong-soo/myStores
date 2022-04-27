@@ -6,25 +6,25 @@
     <!--bootstrap css-->
     <link th:href="@{/css/baseCss.css}" rel="stylesheet"/>
     <link th:href="@{/css/goods/calculate.css}" rel="stylesheet"/>
-    <script type="text/javascript" th:src="@{/js/app/index.js}"></script>
+
     <script type="text/javascript" th:src="@{/js/goods/calculate.js}"></script>
     <title th:text="#{page.calculate}">금시세</title>
 </head>
 
 <body>
 <section class="row justify-content-center flex-fill">
-    <div class="col-8 m-5 bg-white shadow rounded">
+    <div class="col-lg-8 col-md-10 m-lg-5 m-md-1 m-sm-5 bg-white shadow rounded">
 
         <div class="text-center m-5 pt-2">
             <span class="fs-2">계산기</span>
         </div>
 
         <div class="row justify-content-center">
-            <div class="col-6">
+            <div class="col-xl-8 col-lg-9 col-md-10 col-sm-10">
 
                 <div class="input-group mb-3">
                     <span class="input-group-text me-5 col-5 justify-content-center" id="goldMarketValueSpan">금 시세(24k 1돈 기준)</span>
-                    <input type="text" class="form-control text-end" placeholder="오늘의 시세를 입력해주세요."
+                    <input type="text" class="form-control " placeholder="오늘의 시세를 입력해주세요."
                            aria-label="시세" aria-describedby="goldMarketValueSpan" min="0" id="goldMarketValue">
                     <span class="input-group-text col-1 justify-content-center">원</span>
                 </div>
@@ -45,22 +45,22 @@
                                value="24">
                         <label class="btn btn-outline-primary" for="goldKind24K">24K</label>
                     </div>
-                    <input type="number" class="form-control text-end" placeholder="금 중량을 입력해주세요." min="0" aria-label=""
-                           id="goldMount">
+                    <input type="number" class="form-control " placeholder="금 중량을 입력해주세요." min="0" aria-label=""
+                           id="goldMountValue">
                     <span class="input-group-text col-1 justify-content-center">g</span>
                 </div>
 
                 <div class="input-group mb-3">
                     <span class="input-group-text me-5 col-5 justify-content-center" id="gold_wage">공 임</span>
-                    <input type="number" class="form-control text-end" placeholder="공임을 입력해주세요."
-                           aria-label="공임" aria-describedby="gold_wage" min="0" id="goldWage">
+                    <input type="number" class="form-control " placeholder="공임을 입력해주세요."
+                           aria-label="공임" aria-describedby="gold_wage" min="0" id="goldWageValue">
                     <span class="input-group-text col-1 justify-content-center">원</span>
                 </div>
 
                 <div class="input-group mb-3">
                     <span class="input-group-text me-5 col-5 justify-content-center" id="gold_margin">마 진</span>
-                    <input type="number" class="form-control text-end" placeholder="마진을 입력해주세요."
-                           aria-label="마진" aria-descibedby="gold_margin" min="0" id="goldMargin">
+                    <input type="number" class="form-control " placeholder="마진을 입력해주세요."
+                           aria-label="마진" aria-descibedby="gold_margin" min="0" id="goldMarginValue">
                     <span class="input-group-text col-1 justify-content-center">원</span>
                 </div>
 
@@ -72,11 +72,12 @@
                                 id="calculate">
                             Large button
                         </button>
-                        <button type="button" class="btn btn-secondary col-5" th:text="#{button.reset}">Large button
+                        <button type="button" class="btn btn-secondary col-5" th:text="#{button.reset}"
+                        id="reset">Large button
                         </button>
                     </div>
 
-                    <input type="text" class="form-control text-end" placeholder="계산 결과" min="0" aria-label=""
+                    <input type="text" class="form-control " placeholder="계산 결과" min="0" aria-label=""
                            id="totalPrice" disabled>
                     <span class="input-group-text col-1 justify-content-center">원</span>
                 </div>

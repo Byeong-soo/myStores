@@ -2,6 +2,7 @@ body {
     min-height: 100vh;
     min-height: -webkit-fill-available;
     background-image: url("/image/background.jpg");
+    background-size: cover;
 }
 
 html {
@@ -78,3 +79,23 @@ html {
 
 .fw-semibold { font-weight: 600; }
 .lh-tight { line-height: 1.25; }
+
+/*@media screen and (max-width:767px) {*/
+/*    #sideBarBig{*/
+/*        display: none;*/
+/*    }*/
+
+/*    #sideBarSmall{*/
+/*        display: block;*/
+/*    }*/
+/*}*/
+
+/*@media screen and (min-width:1024px) {*/
+/*    #sideBarBig{*/
+/*        display: block;*/
+/*    }*/
+
+/*    #sideBarSmall{*/
+/*        display: none;*/
+/*    }*/
+/*}*/
