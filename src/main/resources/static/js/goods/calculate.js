@@ -2,6 +2,23 @@ window.onload = function () {
 
     let alertPlaceholder = document.getElementById('alertPosition')
 
+    let priceTable = document.getElementById('priceTable');
+
+    let price14kInput = document.getElementById('14kPrice');
+    let price14kStoreInput = document.getElementById('14kStorePrice');
+
+    let price18kInput = document.getElementById('18kPrice');
+    let price18kStoreInput = document.getElementById('18kStorePrice');
+
+    let price24kInput = document.getElementById('24kPrice');
+    let price24kStoreInput = document.getElementById('24kStorePrice');
+
+    let tr14k = document.getElementById('14kTr');
+    let tr18k = document.getElementById('18kTr');
+    let tr24k = document.getElementById('24kTr');
+
+
+
     function alert(message, type) {
         let wrapper = document.createElement('div')
         wrapper.innerHTML = '<div class="alert alert-' + type + ' d-flex align-items-center alert-dismissible" role="alert" id="inputAlert">   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">\n' +
@@ -31,7 +48,7 @@ window.onload = function () {
         let valueList = [];
 
         inputList.forEach(function (value) {
-            let inputValue = getValue(value).replaceAll(',','');
+            let inputValue = getValue(value).replaceAll(',', '');
 
             switch (value) {
                 case 'goldMarketValue' :
@@ -86,10 +103,66 @@ window.onload = function () {
         let goldWage = valueCheck.valueList[2];
         let goldMargin = valueCheck.valueList[3];
 
-        let totalPrice = calculate(goldKind, goldMarket, goldMount, goldWage, goldMargin);
+        let standardPrice = calculate(goldKind, goldMarket, goldMount, goldWage, goldMargin);
+        let standardStorePrice = 0;
+        let convertPrice = 0;
+        let convertStorePrice = 0;
 
-        let totalPriceInput = document.getElementById('totalPrice');
-        totalPriceInput.value = totalPrice.toLocaleString("ko-KR");
+
+
+
+        priceTable.classList.remove('d-none');
+        priceTable.classList.add('d-flex');
+
+        if (goldKind === '14') {
+
+            convertPrice = calculate('18', goldMarket, goldMount * 1.15, goldWage, goldMargin);
+            standardStorePrice = storePriceCalculate(standardPrice);
+            convertStorePrice = storePriceCalculate(convertPrice);
+
+            tr14k.style.display = 'table-row';
+            tr18k.style.display = 'table-row';
+            tr24k.style.display = 'none';
+
+            price14kInput.textContent = standardPrice.toLocaleString("ko-KR");
+            price14kStoreInput.textContent = standardStorePrice.toLocaleString("ko-KR");
+
+            price18kInput.textContent = convertPrice.toLocaleString("ko-KR");
+            price18kStoreInput.textContent = convertStorePrice.toLocaleString("ko-KR");
+
+        }
+
+        if (goldKind === '18') {
+
+            convertPrice = calculate('14', goldMarket, goldMount / 1.15, goldWage, goldMargin);
+            standardStorePrice = storePriceCalculate(standardPrice);
+            convertStorePrice = storePriceCalculate(convertPrice);
+
+            tr14k.style.display = 'table-row';
+            tr18k.style.display = 'table-row';
+            tr24k.style.display = 'none';
+
+            price14kInput.textContent = convertPrice.toLocaleString("ko-KR");
+            price14kStoreInput.textContent = convertStorePrice.toLocaleString("ko-KR");
+
+            price18kInput.textContent = standardPrice.toLocaleString("ko-KR");
+            price18kStoreInput.textContent = standardStorePrice.toLocaleString("ko-KR");
+
+        }
+
+        if (goldKind === '24') {
+
+            standardStorePrice = storePriceCalculate(standardPrice);
+
+            tr14k.style.display = 'none';
+            tr18k.style.display = 'none';
+            tr24k.style.display = 'table-row';
+
+            price24kInput.textContent = standardPrice.toLocaleString("ko-KR");
+            price24kStoreInput.textContent = standardStorePrice.toLocaleString("ko-KR");
+
+        }
+
 
     }
 
@@ -113,6 +186,11 @@ window.onload = function () {
 
         return Math.ceil(goldPrice);
     }
+
+    function storePriceCalculate(price) {
+        return Math.ceil(price * 1.14);
+    }
+
     //--------------------입력 제한 ----------------------
     function inputControl(inputId) {
         findInput(inputId).addEventListener("focusin", function (ev) {
@@ -161,10 +239,13 @@ window.onload = function () {
 
     // 초기화
 
-    document.getElementById('reset').addEventListener('click',function () {
+    document.getElementById('reset').addEventListener('click', function () {
         resetInput('goldMountValue');
         resetInput('goldWageValue');
         resetInput('goldMarginValue');
+
+        priceTable.classList.remove('d-flex');
+        priceTable.classList.add('d-none');
     })
 
     function resetInput(inputId) {

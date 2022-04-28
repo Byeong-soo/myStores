@@ -64,23 +64,51 @@
                     <span class="input-group-text col-1 justify-content-center">원</span>
                 </div>
 
-                <div id="alertPosition"></div>
-
-                <div class="input-group mb-3">
-                    <div class="btn-group me-5 col-5" role="group" aria-label="Basic example">
+                <div class="d-flex mt-5 mb-3 justify-content-center">
+                    <div class="btn-group col-6" role="group" aria-label="Basic example">
                         <button type="button" class="btn btn-primary col-5" th:text="#{button.calculate}"
                                 id="calculate">
                             Large button
                         </button>
                         <button type="button" class="btn btn-secondary col-5" th:text="#{button.reset}"
-                        id="reset">Large button
+                                id="reset">Large button
                         </button>
                     </div>
-
-                    <input type="text" class="form-control " placeholder="계산 결과" min="0" aria-label=""
-                           id="totalPrice" disabled>
-                    <span class="input-group-text col-1 justify-content-center">원</span>
                 </div>
+
+                <div id="alertPosition"></div>
+
+                <div class="mt-5 mb-2 d-none justify-content-center" id="priceTable">
+                    <div class="col-8">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th class="text-center" scope="col">판매가</th>
+                                <th class="text-center" scope="col">스토어팜 판매가</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr id="14kTr">
+                                <th class="text-center" scope="row">14k</th>
+                                <td class="text-center" id="14kPrice"></td>
+                                <td class="text-center" id="14kStorePrice"></td>
+                            </tr>
+                            <tr id="18kTr">
+                                <th class="text-center" scope="row">18k</th>
+                                <td class="text-center" id="18kPrice"></td>
+                                <td class="text-center" id="18kStorePrice"></td>
+                            </tr>
+                            <tr id="24kTr">
+                                <th class="text-center" scope="row">24k</th>
+                                <td class="text-center" id="24kPrice"></td>
+                                <td class="text-center" id="24kStorePrice"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
 
         </div>
