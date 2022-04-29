@@ -14,8 +14,8 @@ public class GoodsApiController {
 
     private final GoodsService goodsService;
 
-    @PostMapping("/api/v1/goods")
-    public String save(){
+    @PostMapping("/api/test/goods")
+    public String countAll(){
         return String.valueOf(goodsService.countAll());
     }
 
