@@ -148,7 +148,7 @@ window.onload = function () {
 
             price14kInput.textContent = convertPrice.toLocaleString("ko-KR");
             price14kStoreInput.textContent = convertStorePrice.toLocaleString("ko-KR");
-            mount14kInput.textContent = (Math.ceil(goldMount/1.15)*100/100).toString();
+            mount14kInput.textContent = (Math.ceil(goldMount/1.15*100)/100).toString();
 
             price18kInput.textContent = standardPrice.toLocaleString("ko-KR");
             price18kStoreInput.textContent = standardStorePrice.toLocaleString("ko-KR");
