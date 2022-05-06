@@ -189,11 +189,11 @@ window.onload = function () {
 
         let goldPrice = (goldMarket / 3.75 * goldRatio * goldMount) + goldWage + goldMargin;
 
-        return Math.ceil(goldPrice);
+        return Math.ceil((goldPrice/100))*100;
     }
 
     function storePriceCalculate(price) {
-        return Math.ceil(price * 1.14);
+        return Math.ceil(price * 1.14/100)*100;
     }
 
     //--------------------입력 제한 ----------------------
