@@ -25,34 +25,34 @@
             <span class="fs-5 fw-semibold">윤이네 골동품 가게</span>
         </a>
         <ul class="list-unstyled ps-0">
-            <li class="mb-1">
-                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                    Home
-                </button>
-                <div class="collapse show" id="home-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" class="link-dark rounded">Overview</a></li>
-                        <li><a href="#" class="link-dark rounded">Updates</a></li>
-                        <li><a href="#" class="link-dark rounded">Reports</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="mb-1">
-                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                    Dashboard
-                </button>
-                <div class="collapse" id="dashboard-collapse">
-                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" class="link-dark rounded">Overview</a></li>
-                        <li><a href="#" class="link-dark rounded">Weekly</a></li>
-                        <li><a href="#" class="link-dark rounded">Monthly</a></li>
-                        <li><a href="#" class="link-dark rounded">Annually</a></li>
-                    </ul>
-                </div>
-            </li>
+<!--            <li class="mb-1">-->
+<!--                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">-->
+<!--                    Home-->
+<!--                </button>-->
+<!--                <div class="collapse show" id="home-collapse">-->
+<!--                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">-->
+<!--                        <li><a href="#" class="link-dark rounded">Overview</a></li>-->
+<!--                        <li><a href="#" class="link-dark rounded">Updates</a></li>-->
+<!--                        <li><a href="#" class="link-dark rounded">Reports</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </li>-->
+<!--            <li class="mb-1">-->
+<!--                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">-->
+<!--                    Dashboard-->
+<!--                </button>-->
+<!--                <div class="collapse" id="dashboard-collapse">-->
+<!--                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">-->
+<!--                        <li><a href="#" class="link-dark rounded">Overview</a></li>-->
+<!--                        <li><a href="#" class="link-dark rounded">Weekly</a></li>-->
+<!--                        <li><a href="#" class="link-dark rounded">Monthly</a></li>-->
+<!--                        <li><a href="#" class="link-dark rounded">Annually</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </li>-->
             <li class="mb-1">
                 <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                    Orders
+                    고객 관리
                 </button>
                 <div class="collapse" id="orders-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
@@ -64,13 +64,14 @@
                 </div>
             </li>
             <li class="mb-1">
-                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#goods-collapse" aria-expanded="false">
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#item-collapse" aria-expanded="false">
                     상품 관리
                 </button>
-                <div class="collapse" id="goods-collapse">
+                <div class="collapse" id="item-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="/goods/search" class="link-dark rounded" th:text="#{label.goodSearch}"></a></li>
-                        <li><a href="/goods/calculate" class="link-dark rounded" th:text="#{label.goodCalculate}">제품 가격 계산</a></li>
+                        <li><a href="/item/save" class="link-dark rounded" th:text="#{label.itemSave}"></a></li>
+                        <li><a href="/item/search" class="link-dark rounded" th:text="#{label.itemSearch}"></a></li>
+                        <li><a href="/item/calculate" class="link-dark rounded" th:text="#{label.itemCalculate}">제품 가격 계산</a></li>
 <!--                        <li><a href="#" class="link-dark rounded">Shipped</a></li>-->
 <!--                        <li><a href="#" class="link-dark rounded">Returned</a></li>-->
                     </ul>
@@ -121,8 +122,8 @@
                     <svg class="bi" width="24" height="24" role="img" aria-label="Products"><use xlink:href="#grid"/></svg>
                 </a>
                 <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-                    <li><a class="dropdown-item" href="/goods/search" th:text="#{label.goodSearch}"></a></li>
-                    <li><a class="dropdown-item" href="/goods/calculate" th:text="#{label.goodCalculate}">Settings</a></li>
+                    <li><a class="dropdown-item" href="/item/search" th:text="#{label.itemSearch}"></a></li>
+                    <li><a class="dropdown-item" href="/item/calculate" th:text="#{label.itemCalculate}">Settings</a></li>
 
                 </ul>
             </li>
