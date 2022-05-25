@@ -1,4 +1,4 @@
-package com.myStores.web;
+package com.myStores.web.controller;
 
 import com.myStores.config.auth.LoginUser;
 import com.myStores.config.auth.dto.SessionUser;
