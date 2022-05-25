@@ -1,4 +1,4 @@
-package com.myStores.web;
+package com.myStores.web.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -7,16 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Controller
-@RequestMapping("/goods")
-public class goodsController {
+@RequestMapping("/item")
+public class itemController {
 
     @GetMapping("/search")
     public String searchForm(){
-        return "form/goods/goodSearch";
+        return "form/item/itemSearch";
     }
 
     @GetMapping("/calculate")
     public String calculateForm(){
-        return "form/goods/goodCalculate";
+        return "form/item/itemCalculate";
+    }
+
+    @GetMapping("save")
+    public String saveForm(){
+        return "form/item/itemSave";
     }
 }
