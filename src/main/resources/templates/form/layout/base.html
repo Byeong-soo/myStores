@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<div class="sidebar">
+<div class="sidebar align-items-stretch">
     <svg th:replace="~{form/layout/svgCollection :: svg}"></svg>
 
 <!--전체화면일때-->
@@ -69,7 +69,7 @@
                 </button>
                 <div class="collapse" id="item-collapse">
                     <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="/item/save" class="link-dark rounded" th:text="#{label.itemSave}"></a></li>
+                        <li><a href="/item/new" class="link-dark rounded" th:text="#{label.itemSave}"></a></li>
                         <li><a href="/item/search" class="link-dark rounded" th:text="#{label.itemSearch}"></a></li>
                         <li><a href="/item/calculate" class="link-dark rounded" th:text="#{label.itemCalculate}">제품 가격 계산</a></li>
 <!--                        <li><a href="#" class="link-dark rounded">Shipped</a></li>-->
