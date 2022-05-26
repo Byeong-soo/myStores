@@ -16,53 +16,54 @@ public class Item {
     @Column(name = "item_id")
     private Long id;
 
-    private String model;
+    @Column(name = "model_kind")
+    private String modelKind;
+    @Column(name = "model_number")
+    private String modelNumber;
+    @Column(name = "purchase_store")
+    private String purchaseStore;
+    @Column(name = "purchase_store_number")
+    private String purchaseStoreNumber;
 
-    @Column
-    private String classification;
+    @Column(name = "basic_mount")
+    private Double basicMount;
+    @Column(name = "basic_color")
+    private String basicColor;
+    @Column(name = "core_stone")
+    private String coreStone;
+    @Column(name = "stone_quantity")
+    private int stoneQuantity;
+    @Column(name = "discontinued")
+    private String discontinued;
 
-    @Column
-    private Double mount;
+    @Column(columnDefinition = "TEXT")
+    private String memo;
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "item_wage_id")
     private ItemWage itemWage;
 
-    @Column(name = "inventory_status")
-    private int inventoryStatus;
-
-    @Column(name = "core_stone")
-    private String coreStone;
-
-    @Column(name = "purchase_store")
-    private String purchaseStore;
-
-    @Column(name = "cumulative_sale")
-    private String cumulativeSale;
-
-    @Column(name = "stone_count")
-    private int stoneCount;
-
-    @Column(columnDefinition = "TEXT")
-    private String memo;
-
     private String ect;
 
     //== 생성 메서드 ==//
 
-    public Item(String model, String classification, Double mount, ItemWage itemWage,
-                int inventoryStatus, String coreStone, String purchaseStore,
-                String cumulativeSale, int stoneCount, String memo, String ect) {
-        this.model = model;
-        this.classification = classification;
-        this.mount = mount;
-        this.itemWage = itemWage;
-        this.inventoryStatus = inventoryStatus;
-        this.coreStone = coreStone;
+
+    public Item(String modelKind, String modelNumber, String purchaseStore,
+                String purchaseStoreNumber, Double basicMount,
+                String basicColor, String coreStone,
+                int stoneQuantity, String discontinued,
+                String memo, ItemWage itemWage, String ect) {
+        this.modelKind = modelKind;
+        this.modelNumber = modelNumber;
         this.purchaseStore = purchaseStore;
-        this.cumulativeSale = cumulativeSale;
-        this.stoneCount = stoneCount;
+        this.purchaseStoreNumber = purchaseStoreNumber;
+        this.basicMount = basicMount;
+        this.basicColor = basicColor;
+        this.coreStone = coreStone;
+        this.stoneQuantity = stoneQuantity;
+        this.discontinued = discontinued;
         this.memo = memo;
+        this.itemWage = itemWage;
         this.ect = ect;
     }
 }
