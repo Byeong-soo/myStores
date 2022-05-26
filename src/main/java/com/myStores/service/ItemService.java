@@ -17,8 +17,16 @@ public class ItemService {
 
     @Transactional
     public Long saveItem(Item item){
+        validateDuplicateModel(item);
         itemRepository.save(item);
         return item.getId();
+    }
+
+    private void validateDuplicateModel(Item item) {
+        List<Item> findItems = itemRepository.findByModelNumber(item.getModelNumber());
+        if(!findItems.isEmpty()){
+            throw new IllegalStateException("이미 존재하는 모델입니다.");
+        }
     }
 
     public Item findOne(Long itemId){
@@ -29,4 +37,7 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
+    public List<Item> findAllByModelNumber(String modelNumber){
+        return itemRepository.findAllByModelNumber(modelNumber);
+    }
 }
