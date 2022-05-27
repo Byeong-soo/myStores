@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html th:replace="~{form/layout/base :: layout(~{::section},~{::title},~{::link},~{::script})}"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!--bootstrap css-->
+    <link th:href="@{/css/baseCss.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/app/base.js}"></script>
+    <title>제품 검색</title>
+</head>
+
+<body>
+<section class="row justify-content-center flex-fill">
+    <div class="col-lg-8 col-md-10 m-lg-5 m-md-1 m-sm-5 bg-white shadow rounded">
+
+        <div class="text-center m-5 pt-2">
+            <span class="fs-2">금시세 설정</span>
+        </div>
+
+        <div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">기준일</th>
+                    <th scope="col">시세</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${#dates.format(latestPrice.getRecordTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
+                    <td th:text="${latestPrice.getPrice()}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <form role="form" method="Post" action="/item/goldPrice">
+            <div class="col-8 input-group mb-3 d-flex justify-content-center">
+                <div class="col-6">
+                    <input type="number" class="form-control" placeholder="금시세를 입력해주세요" aria-label="goldMarketCondition">
+                </div>
+                <div class="ms-3">
+                    <button class="btn btn-outline-secondary" type="submit">시세 변경</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</section>
+</body>
+</html>

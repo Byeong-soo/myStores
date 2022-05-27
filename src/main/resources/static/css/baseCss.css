@@ -1,19 +1,21 @@
 body {
     min-height: 100vh;
-    min-height: -webkit-fill-available;
+    height: 100%;
+    /*height: -webkit-fill-available;*/
     background-image: url("/image/background.jpg");
     background-size: cover;
 }
 
 html {
     min-height: 100vh;
-    height: -webkit-fill-available;
+    height: 100%;
+    /*height: -webkit-fill-available;*/
 }
 
 .sidebar {
     display: flex;
     flex-wrap: nowrap;
-    height: 100vh;
+    height: 100%;
     overflow-x: hidden;
 }
 
