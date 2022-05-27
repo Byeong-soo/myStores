@@ -1,8 +1,11 @@
 package com.myStores.web.controller;
 
+import com.myStores.domain.GoldPrice;
 import com.myStores.domain.item.Item;
 import com.myStores.domain.item.ItemWage;
 import com.myStores.domain.item.WagePrice;
+import com.myStores.repository.ItemSearch;
+import com.myStores.service.GoldPriceService;
 import com.myStores.service.ItemService;
 import com.myStores.web.dto.CreateItemDto;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -24,9 +28,12 @@ import javax.validation.Valid;
 public class itemController {
 
     private final ItemService itemService;
+    private final GoldPriceService goldPriceService;
 
     @GetMapping("/search")
-    public String searchForm(){
+    public String searchForm(@ModelAttribute("itemSearch")ItemSearch itemSearch,Model model){
+        List<Item> resultItems = itemService.findAllByModelNumber(itemSearch.getModelNumber());
+        model.addAttribute("items",resultItems);
         return "form/item/itemSearch";
     }
 
@@ -61,5 +68,14 @@ public class itemController {
         itemService.saveItem(item);
 
         return "redirect:/item/search";
+    }
+
+    @GetMapping("/goldPrice")
+    public String goldMarketCondition(Model model){
+        List<GoldPrice> latestPrice = goldPriceService.getLatestPrice();
+        if(latestPrice.size()!=0){
+            model.addAttribute("latestPrice",latestPrice.get(0));
+        }
+        return "form/item/goldPrice";
     }
 }
