@@ -29,8 +29,8 @@ class ItemServiceTest {
         //given
         WagePrice wagePrice = new WagePrice(0,1000,1000);
         ItemWage itemWage = new ItemWage(wagePrice);
-        Item item = new Item("목걸이","부엉이2","부산공방","123",1.0,
-                "초록","에메랄드",1,"N",null,itemWage,null);
+        Item item= new Item("목걸이","부엉이_1","부산공방","123",null,
+                null,1,null,"에메랄드",1,"N",null,itemWage,0);
 
         //when
         Long saveItemId = itemService.saveItem(item);
@@ -40,24 +40,25 @@ class ItemServiceTest {
     }
 
     @Test
+    @Transactional
     public void 제품명으로_검색() throws Exception {
         //given
         WagePrice wagePrice = new WagePrice(0,1000,1000);
         ItemWage itemWage = new ItemWage(wagePrice);
-        Item item1 = new Item("목걸이","부엉이_1","부산공방","123",1.0,
-                "초록","에메랄드",1,"N",null,itemWage,null);
+        Item item1 = new Item("목걸이","부엉이_1","부산공방","123",null,
+                null,1,null,"에메랄드",1,"N",null,itemWage,0);
         Long saveItemId1 = itemService.saveItem(item1);
 
         WagePrice wagePrice2 = new WagePrice(0,1000,1000);
         ItemWage itemWage2 = new ItemWage(wagePrice2);
-        Item item2 = new Item("목걸이","부엉이_2","부산공방","123",1.0,
-                "초록","에메랄드",1,"N",null,itemWage2,null);
+        Item item2 = new Item("목걸이","부엉이_2","부산공방","123",null,
+                null,1,null,"에메랄드",1,"N",null,itemWage,0);
         Long saveItemId2 = itemService.saveItem(item2);
 
         WagePrice wagePrice3 = new WagePrice(0,1000,1000);
         ItemWage itemWage3 = new ItemWage(wagePrice3);
-        Item item3 = new Item("목걸이","거북이_2","부산공방","123",1.0,
-                "초록","에메랄드",1,"N",null,itemWage3,null);
+        Item item3 = new Item("목걸이","부엉_2","부산공방","123",null,
+                null,1,null,"에메랄드",1,"N",null,itemWage,0);
         Long saveItemId3 = itemService.saveItem(item3);
 
         //when
