@@ -13,11 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -31,39 +31,47 @@ public class itemController {
     private final GoldPriceService goldPriceService;
 
     @GetMapping("/search")
-    public String searchForm(@ModelAttribute("itemSearch")ItemSearch itemSearch,Model model){
+    public String searchForm(@ModelAttribute("itemSearch") ItemSearch itemSearch,
+                             Model model, HttpServletRequest request) {
         List<Item> resultItems = itemService.findAllByModelNumber(itemSearch.getModelNumber());
-        model.addAttribute("items",resultItems);
+        GoldPrice latestPrice = goldPriceService.getLatestPrice();
+
+        if(latestPrice != null){
+            model.addAttribute("goldPrice", latestPrice.getPrice());
+        }
+        model.addAttribute("items", resultItems);
+
         return "form/item/itemSearch";
     }
 
     @GetMapping("/calculate")
-    public String calculateForm(){
+    public String calculateForm() {
         return "form/item/itemCalculate";
     }
 
     @GetMapping("new")
-    public String saveForm(Model model){
-        model.addAttribute("itemForm",new CreateItemDto());
+    public String saveForm(Model model) {
+        model.addAttribute("itemForm", new CreateItemDto());
         return "form/item/createItemForm";
     }
 
     @PostMapping("new")
-    public String create(@Valid @ModelAttribute("itemForm") CreateItemDto form, BindingResult result){
+    public String create(@Valid @ModelAttribute("itemForm") CreateItemDto form, BindingResult result) {
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             return "form/item/createItemForm";
         }
 
         WagePrice wagePrice = new WagePrice(form.getBasicWage(), form.getMainWage(), form.getSupportWage());
         ItemWage itemWage = new ItemWage(wagePrice);
 
-        Item item = new Item(form.getModelKind(),form.getModelNumber(),
-                form.getPurchaseStore(),form.getPurchaseStoreNumber(),
-                form.getBasicMount(),form.getBasicColor(),
-                form.getCoreStone(),form.getStoneQuantity(),
-                form.getDiscontinued(),form.getMemo(),
-                itemWage,form.getMemo());
+        Item item = new Item(form.getModelKind(), form.getModelNumber(),
+                form.getPurchaseStore(), form.getManufacturerNumber(),
+                form.getAboutProduct(),form.getSetType(),
+                form.getBasicMount(), form.getBasicColor(),
+                form.getCoreStone(), form.getStoneQuantity(),
+                form.getDiscontinued(), form.getMemo(),
+                itemWage,form.getMargin());
 
         itemService.saveItem(item);
 
@@ -71,11 +79,33 @@ public class itemController {
     }
 
     @GetMapping("/goldPrice")
-    public String goldMarketCondition(Model model){
-        List<GoldPrice> latestPrice = goldPriceService.getLatestPrice();
-        if(latestPrice.size()!=0){
-            model.addAttribute("latestPrice",latestPrice.get(0));
-        }
+    public String goldMarketCondition(Model model) {
+
+        GoldPrice latestPrice = goldPriceService.getLatestPrice();
+        model.addAttribute("latestPrice", latestPrice);
+
         return "form/item/goldPrice";
     }
+
+    @PostMapping("/saveGoldPrice")
+    public String alterGoldPrice(@RequestParam int goldPrice, HttpServletResponse response) {
+        goldPriceService.savePrice(goldPrice);
+        return "redirect:/item/goldPrice";
+    }
+
+    private void addCookie(HttpServletResponse response, String cookieName) {
+        // 쿠키 추가
+        GoldPrice latestPrice = goldPriceService.getLatestPrice();
+        int price = latestPrice.getPrice();
+        Cookie goldPriceCookie = new Cookie(cookieName, String.valueOf(price));
+        response.addCookie(goldPriceCookie);
+    }
+
+    private void expireCookie(HttpServletResponse response, String cookieName) {
+        Cookie cookie = new Cookie(cookieName, null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+    }
+
+
 }
