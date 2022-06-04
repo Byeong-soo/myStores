@@ -26,10 +26,10 @@ class GoldPriceServiceTest {
         goldPriceService.savePrice(20000);
 
         //when
-        List<GoldPrice> latestPrice = goldPriceService.getLatestPrice();
+        GoldPrice latestPrice = goldPriceService.getLatestPrice();
 
         //then
-        assertEquals(latestPrice.get(0).getPrice(),20000);
+        assertEquals(latestPrice.getPrice(),20000);
     }
 
     @Test
@@ -41,10 +41,10 @@ class GoldPriceServiceTest {
         goldPriceService.savePrice(120000);
 
         //when
-        List<GoldPrice> latestPrice = goldPriceService.getLatestPrice();
+        GoldPrice latestPrice = goldPriceService.getLatestPrice();
 
         //then
-        assertEquals(latestPrice.get(0).getPrice(),120000);
+        assertEquals(latestPrice.getPrice(),120000);
     }
 
 }

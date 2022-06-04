@@ -24,7 +24,7 @@ public class GoldPriceService {
         goldPriceRepository.save(goldPrice);
     }
 
-    public List<GoldPrice> getLatestPrice(){
+    public GoldPrice getLatestPrice(){
         return goldPriceRepository.latestPrice();
     }
 }

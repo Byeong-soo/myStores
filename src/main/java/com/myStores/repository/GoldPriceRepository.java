@@ -17,10 +17,14 @@ public class GoldPriceRepository {
         em.persist(goldPrice);
     }
 
-    public List<GoldPrice> latestPrice(){
-        return em.createQuery("select g from GoldPrice g order by g.recordTime desc", GoldPrice.class)
+    public GoldPrice latestPrice(){
+        List<GoldPrice> resultList = em.createQuery("select g from GoldPrice g order by g.recordTime desc", GoldPrice.class)
                 .setMaxResults(1)
                 .getResultList();
+        if(resultList.size()>0){
+            return resultList.get(0);
+        }
+       return null;
     }
 
 
