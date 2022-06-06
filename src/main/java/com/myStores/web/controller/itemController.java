@@ -8,6 +8,7 @@ import com.myStores.repository.ItemSearch;
 import com.myStores.service.GoldPriceService;
 import com.myStores.service.ItemService;
 import com.myStores.web.dto.CreateItemDto;
+import com.myStores.web.dto.SearchItemDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -33,13 +34,13 @@ public class itemController {
     @GetMapping("/search")
     public String searchForm(@ModelAttribute("itemSearch") ItemSearch itemSearch,
                              Model model, HttpServletRequest request) {
-        List<Item> resultItems = itemService.findAllByModelNumber(itemSearch.getModelNumber());
+        List<SearchItemDto> findItems = itemService.findAllByModelNumber(itemSearch.getModelNumber());
         GoldPrice latestPrice = goldPriceService.getLatestPrice();
 
         if(latestPrice != null){
             model.addAttribute("goldPrice", latestPrice.getPrice());
         }
-        model.addAttribute("items", resultItems);
+        model.addAttribute("items", findItems);
 
         return "form/item/itemSearch";
     }

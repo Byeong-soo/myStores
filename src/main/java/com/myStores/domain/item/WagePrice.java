@@ -12,6 +12,8 @@ public class WagePrice {
     private int main;
     private int support;
 
+    private int sum;
+
     protected WagePrice(){
     }
 
@@ -19,5 +21,6 @@ public class WagePrice {
         this.basic = basic;
         this.main = main;
         this.support = support;
+        this.sum = basic+main+support;
     }
 }

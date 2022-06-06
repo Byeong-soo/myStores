@@ -41,7 +41,7 @@ public class Item {
     @Column(name = "core_stone")
     private String coreStone;
     @Column(name = "stone_quantity")
-    private int stoneQuantity;
+    private String stoneQuantity;
     @Column(name = "discontinued")
     private String discontinued;
 
@@ -60,7 +60,7 @@ public class Item {
                 String purchaseStore, String manufacturerNumber,
                 String aboutProduct, String setType,
                 double basicMount, String basicColor,
-                String coreStone, int stoneQuantity,
+                String coreStone, String stoneQuantity,
                 String discontinued, String memo,
                 ItemWage itemWage, int margin) {
         this.modelKind = modelKind;
