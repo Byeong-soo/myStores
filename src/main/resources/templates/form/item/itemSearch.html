@@ -7,6 +7,7 @@
     <link th:href="@{/css/baseCss.css}" rel="stylesheet"/>
     <link th:href="@{/css/item/search.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/app/base.js}"></script>
+    <script type="text/javascript" th:src="@{/js/item/search.js}"></script>
     <title>제품 검색</title>
 </head>
 
@@ -61,12 +62,12 @@
                                             <div class="me-5">
                                                 <span>14K 가격 :</span>
                                                 <span th:if="${item.basicMount}!=null"
-                                                      th:text="${#numbers.formatInteger(item.basicMount * goldPrice + item.margin,0,'COMMA')}">중량을 설정해주세요</span>
+                                                      th:text="${#numbers.formatInteger(item.basicMount * goldPrice +item.sum+ item.margin,0,'COMMA')}">중량을 설정해주세요</span>
                                             </div>
                                             <div>
                                                 <span>18K 가격 :</span>
                                                 <span th:if="${item.basicMount}!=null"
-                                                      th:text="${#numbers.formatInteger(item.basicMount * 1.13 * goldPrice + item.margin,0,'COMMA')}">중량을 설정해주세요</span>
+                                                      th:text="${#numbers.formatInteger(item.basicMount * 1.13 * goldPrice +item.sum+item.margin,0,'COMMA')}">중량을 설정해주세요</span>
                                             </div>
                                         </div>
                                         <div th:if="${item.margin==0}">
@@ -78,17 +79,62 @@
                         </a>
 
 
-                        <div class="item-button">
-                            <button class="btn btn-primary mb-3"
-                                    type="button">공임 수정
+                        <div class="item-button col-6" th:id="*{__${item.id}__+'buttonDiv'}">
+
+                            <div class="hoverPrice shadow rounded-3 p-4" th:id="*{__${item.id}__+'hoverPriceDiv'}">
+                                <div class="mb-3">
+                                    <h6>공임 비용</h6>
+                                    <div>
+                                        <span>기본 공임 : </span><span th:text="${item.basicWage}"></span>
+                                    </div>
+                                    <div>
+                                        <span>중심 공임 : </span><span th:text="${item.mainWage}"></span>
+                                    </div>
+                                    <div>
+                                        <span>보조 공임 : </span><span th:text="${item.supportWage}"></span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h6>마진</h6>
+                                    <span>마진 : </span><span th:text="${item.margin}"></span>
+                                </div>
+
+                            </div>
+
+                            <button class="btn btn-primary mb-3 priceShow" th:id="*{__${item.id}__+'priceUpdateButton'}"
+                                    th:myItemId="${item.id}"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#priceModal"
+                                    type="button">금액 수정
+<!--                                th:onclick="viewPrice(this.getAttribute('myItemId'))"-->
                             </button>
-                            <button class="btn btn-primary"
+                            <button class="btn btn-primary" th:id="*{__${item.id}__+'textCopyButton'}"
                                     type="button">문구 복사
                             </button>
                         </div>
 
                     </li>
                 </ul>
+
+                <!-- Modal -->
+                <div class="modal fade" id="priceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">금액 수정</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Understood</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
             </div>
         </div>
 
