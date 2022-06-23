@@ -78,4 +78,9 @@ public class Item {
         this.memo = memo;
         this.itemWage = itemWage;
     }
+
+    public void changePrice(ItemWage itemWage,int margin) {
+        this.itemWage = itemWage;
+        this.margin = margin;
+    }
 }
