@@ -40,7 +40,7 @@
         <div>
             <div>
                 <span>검색 결과 : </span>
-                <span th:text="${items.size()}"></span>
+                <span th:text="${searchCount}"></span>
             </div>
             <div th:if="${goldPrice == null}" th:text="'금시세를 먼저 설정해주세요'">
             </div>
@@ -49,7 +49,7 @@
                 <ul th:each="item : ${items}">
                     <li class="item-list">
                         <div class="item-photo">
-                            <!--                                <img th:src="@{/image/logo.png}">-->
+                            <img th:src="@{/image/dotoryPhoto/{modelNumber}.jpg (modelNumber=${item.id})}">
                         </div>
 
                         <a class="item-link"  th:href="@{/items/{id}/edit (id=${item.id})}">
@@ -79,38 +79,38 @@
                         </a>
 
 
-                        <div class="item-button col-6" th:id="*{__${item.id}__+'buttonDiv'}">
+                        <div class="item-button col-6">
 
                             <div class="hoverPrice shadow rounded-3 p-4" th:id="*{__${item.id}__+'hoverPriceDiv'}">
                                 <div class="mb-3">
                                     <h6>공임 비용</h6>
                                     <div>
-                                        <span>기본 공임 : </span><span th:text="${item.basicWage}"></span>
+                                        <span>기본 공임 : </span><span th:id="*{__${item.id}__+'basicWage'}" th:text="${item.basicWage}"></span>
                                     </div>
                                     <div>
-                                        <span>중심 공임 : </span><span th:text="${item.mainWage}"></span>
+                                        <span>중심 공임 : </span><span th:id="*{__${item.id}__+'mainWage'}" th:text="${item.mainWage}"></span>
                                     </div>
                                     <div>
-                                        <span>보조 공임 : </span><span th:text="${item.supportWage}"></span>
+                                        <span>보조 공임 : </span><span th:id="*{__${item.id}__+'supportWage'}" th:text="${item.supportWage}"></span>
                                     </div>
                                 </div>
                                 <div>
                                     <h6>마진</h6>
-                                    <span>마진 : </span><span th:text="${item.margin}"></span>
+                                    <span>마진 : </span><span th:id="*{__${item.id}__+'marginWage'}" th:text="${item.margin}"></span>
                                 </div>
 
                             </div>
+                            <div style="padding-left:25px">
+                                <button class="btn btn-primary mb-3 priceShow" th:id="*{__${item.id}__+'priceUpdateButton'}"
+                                        th:myItemId="${item.id}"
+                                        type="button">금액 수정
 
-                            <button class="btn btn-primary mb-3 priceShow" th:id="*{__${item.id}__+'priceUpdateButton'}"
-                                    th:myItemId="${item.id}"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#priceModal"
-                                    type="button">금액 수정
-<!--                                th:onclick="viewPrice(this.getAttribute('myItemId'))"-->
-                            </button>
-                            <button class="btn btn-primary" th:id="*{__${item.id}__+'textCopyButton'}"
-                                    type="button">문구 복사
-                            </button>
+                                </button>
+                                <button class="btn btn-primary copyPhrases" th:id="*{__${item.id}__+'textCopyButton'}"
+                                        th:myItemIdCopy="${item.id}"
+                                        type="button">문구 복사
+                                </button>
+                            </div>
                         </div>
 
                     </li>
@@ -119,25 +119,114 @@
                 <!-- Modal -->
                 <div class="modal fade" id="priceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
-                        <div class="modal-content">
+                        <div class="modal-content shadow-lg">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel">금액 수정</h5>
+                                <div class="d-flex modalTextDiv">
+                                    <h5 class="modal-title" id="priceModalLabel"></h5>
+                                    <span class="ms-3">-- 금액 수정</span>
+                                </div>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                ...
+                                <input id="modelId" hidden>
+                                <form role="form" class="needs-validation">
+                                    <h4 class="mb-3">공임 비용</h4>
+                                    <div class="row">
+                                        <!----------------------------------------------------->
+                                        <div class="col-sm-4">
+                                            <label th:for="basicWage" class="form-label">기본 공임</label>
+                                            <input type="number" class="form-control" id="basicWage" name="basicWage" placeholder="" required>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            공임은 필수입니다.
+                                        </div>
+                                        <!----------------------------------------------------->
+                                        <div class="col-sm-4">
+                                            <label th:for="mainWage" class="form-label">중심 공임</label>
+                                            <input type="number" class="form-control" id="mainWage" name="mainWage" placeholder="" required>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            공임은 필수입니다.
+                                        </div>
+                                        <!----------------------------------------------------->
+                                        <div class="col-sm-4">
+                                            <label th:for="supportWage" class="form-label">보조 공임</label>
+                                            <input type="number" class="form-control" id="supportWage" name="supportWage" placeholder="" required>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            공임은 필수입니다.
+                                        </div>
+
+                                    </div>
+
+                                    <hr class="my-4">
+
+                                    <h4 class="mb-3">마진</h4>
+                                    <div class="row">
+                                        <!----------------------------------------------------->
+                                        <div class="col-sm-4">
+                                            <label th:for="margin" class="form-label">이윤</label>
+                                            <input type="number" class="form-control" id="margin" name="margin" placeholder="" required>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            이윤은 필수입니다.
+                                        </div>
+                                    </div>
+
+                                </form>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Understood</button>
+                                <button type="button" class="btn btn-primary" id="priceChangeButton">수정</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- Modal -->
+
+                <div class="m-3 d-flex justify-content-center">
+                    <nav th:if="${searchCount} != 0" aria-label="Page navigation example"
+                         th:with="start=${((pageNum -1)/5)*5}, end=(${(totalPage  == 0) ? 1 : (start + (4) < totalPage -1 ? start + (4) : totalPage -1)})">
+                        <ul class="pagination">
+                            <li class="page-item" th:class="${pageNum} eq 1? 'page-item disabled' :'page-item'">
+                                <a class="page-link" href="#" th:href="@{/item/search/(pageNum=1,modelNumber=${keyWord})}" aria-label="First">
+                                    <span aria-hidden="true">1</span>
+                                </a>
+                            </li>
+                            <li class="page-item" th:class="${pageNum} eq 1? 'page-item disabled' :'page-item'">
+                                <a class="page-link" href="#" th:href="@{/item/search/(pageNum=${pageNum}-1,modelNumber=${keyWord})}" aria-label="Previous">
+                                    <span aria-hidden="true">&lt;</span>
+                                </a>
+                            </li>
+
+                            <li th:each="page: ${#numbers.sequence(start, end)}" th:class="${pageNum == page+1}? 'page-item active' : 'page-item'">
+                                <a class="page-link" th:href="@{/item/search (pageNum=${page}+1,modelNumber=${keyWord})}" th:text="${page}+1"></a></li>
+                            </li>
+
+<!--                            <li th:class="${pageNum == 1}? 'page-item active' : 'page-item'">-->
+<!--                                <a class="page-link" href="#" th:text="1"></a></li>-->
+<!--                            <li class="page-item"><a class="page-link" href="#" th:text="2"></a></li>-->
+<!--                            <li class="page-item"><a class="page-link" href="#" th:text="3"></a></li>-->
+<!--                            <li class="page-item"><a class="page-link" href="#" th:text="4"></a></li>-->
+<!--                            <li class="page-item"><a class="page-link" href="#" th:text="5"></a></li>-->
+
+                            <li class="page-item" th:class="${pageNum eq totalPage}? 'page-item disabled' : 'page-item'">
+                                <a class="page-link" href="#" th:href="@{/item/search/(pageNum=${pageNum}+1,modelNumber=${keyWord})}" aria-label="Next">
+                                    <span aria-hidden="true">&gt;</span>
+                                </a>
+                            </li>
+                            <li class="page-item" th:class="${pageNum eq totalPage}? 'page-item disabled' :'page-item'">
+                                <a class="page-link" href="#" th:href="@{/item/search/(pageNum=${totalPage},modelNumber=${keyWord})}" aria-label="Last">
+                                    <span aria-hidden="true" th:text="${totalPage}"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+
             </div>
         </div>
-
 
     </div>
 </section>
