@@ -4,6 +4,7 @@ import com.myStores.domain.item.Item;
 import com.myStores.domain.item.ItemWage;
 import com.myStores.domain.item.WagePrice;
 import com.myStores.repository.ItemRepository;
+import com.myStores.web.dto.PriceInfo;
 import com.myStores.web.dto.SearchItemDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,11 +48,20 @@ public class ItemService {
         List<SearchItemDto> findItemList = new ArrayList<>();
 
         for (Item item : allByModelNumber) {
-            ItemWage findItemWage = item.getItemWage();
-            WagePrice wagePrice = findItemWage.getWagePrice();
-            SearchItemDto searchItemDto = new SearchItemDto(item.getId(), item.getModelNumber(), item.getBasicMount(),
-                    item.getMargin(), item.getMemo(), wagePrice.getBasic(), wagePrice.getMain(),
-                    wagePrice.getSupport(), wagePrice.getSum());
+            SearchItemDto searchItemDto = new SearchItemDto(item);
+            findItemList.add(searchItemDto);
+        }
+
+        return findItemList;
+    }
+
+    public List<SearchItemDto> findAllByModelNumberPaging(String modelNumber,int offset,int limit){
+
+        List<Item> allByModelNumber = itemRepository.findAllByModelNumberPaging(modelNumber,offset,limit);
+        List<SearchItemDto> findItemList = new ArrayList<>();
+
+        for (Item item : allByModelNumber) {
+            SearchItemDto searchItemDto = new SearchItemDto(item);
             findItemList.add(searchItemDto);
         }
 
@@ -60,13 +70,17 @@ public class ItemService {
 
     public SearchItemDto findPriceById(Long findItemId){
         Item findItem = itemRepository.findById(findItemId);
+        return  new SearchItemDto(findItem);
+    }
+    @Transactional
+    public SearchItemDto updatePrice(Long findItemId, PriceInfo priceInfo){
+        Item findItem = itemRepository.findById(findItemId);
 
-        ItemWage findItemWage = findItem.getItemWage();
-        WagePrice wagePrice = findItemWage.getWagePrice();
+        WagePrice wagePrice = new WagePrice(priceInfo.getBasicWage(),priceInfo.getMainWage(),priceInfo.getSupportWage());
+        ItemWage itemWage = new ItemWage(wagePrice);
 
-        return  new SearchItemDto(findItemId,findItem.getModelNumber(),
-                findItem.getBasicMount(),findItem.getMargin(),
-                findItem.getMemo(), wagePrice.getBasic(), wagePrice.getMain(),
-                wagePrice.getSupport(), wagePrice.getSum());
+        findItem.changePrice(itemWage,priceInfo.getMargin());
+
+        return  new SearchItemDto(findItem);
     }
 }
