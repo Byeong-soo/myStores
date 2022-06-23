@@ -65,7 +65,10 @@
                         <!----------------------------------------------------->
                         <div class="col-sm-6">
                             <label th:for="basicMount" class="form-label">표준 중량</label>
-                            <input type="number" step="0.01" class="form-control" th:field="*{basicMount}" placeholder="" value="">
+                            <input type="number" step="0.01" class="form-control" th:field="*{basicMount}" placeholder="" value="" required>
+                            <div class="invalid-feedback">
+                                중량은 필수입니다.중량이 없을시 0으로 입력해주세요
+                            </div>
                         </div>
 
                         <div class="col-sm-6">
