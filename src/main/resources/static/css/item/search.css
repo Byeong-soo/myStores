@@ -35,6 +35,12 @@ ul{
     margin-right: 20px;
 }
 
+img{
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+}
+
 .item-link{
     text-decoration: none;
     display: block;
@@ -77,3 +83,9 @@ ul{
     bottom: 50%;
     overflow: visible;
 }
+
+.modalTextDiv span{
+    margin: auto;
+    display: table;
+}
+
