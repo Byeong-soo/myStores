@@ -33,15 +33,32 @@ public class itemController {
 
     @GetMapping("/search")
     public String searchForm(@ModelAttribute("itemSearch") ItemSearch itemSearch,
-                             Model model, HttpServletRequest request) {
-        List<SearchItemDto> findItems = itemService.findAllByModelNumber(itemSearch.getModelNumber());
+                             @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
+                             Model model) {
+
+        int searchCount = itemService.findAllByModelNumber(itemSearch.getModelNumber()).size();
+        int totalPage = 0;
+        if(searchCount>0){
+            if(searchCount%10==0)totalPage = searchCount/10;
+            if(searchCount%10!=0)totalPage = searchCount/10 + 1;
+        }
+
+        int offset = 0;
+        if(pageNum <=1) offset = 0;
+        if(pageNum >1) offset = (pageNum-1)*10;
+        int limit = 10;
+
+        List<SearchItemDto> findItems = itemService.findAllByModelNumberPaging(itemSearch.getModelNumber(),offset,limit);
         GoldPrice latestPrice = goldPriceService.getLatestPrice();
 
         if(latestPrice != null){
+            model.addAttribute("searchCount",searchCount);
             model.addAttribute("goldPrice", latestPrice.getPrice());
         }
+        model.addAttribute("keyWord",itemSearch.getModelNumber());
+        model.addAttribute("pageNum",pageNum);
+        model.addAttribute("totalPage",totalPage);
         model.addAttribute("items", findItems);
-
         return "form/item/itemSearch";
     }
 
@@ -92,6 +109,13 @@ public class itemController {
     public String alterGoldPrice(@RequestParam int goldPrice, HttpServletResponse response) {
         goldPriceService.savePrice(goldPrice);
         return "redirect:/item/goldPrice";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String updateItemForm(@PathVariable("id")Long id,Model model){
+
+
+        return  "form/item/updateItemForm";
     }
 
     private void addCookie(HttpServletResponse response, String cookieName) {
