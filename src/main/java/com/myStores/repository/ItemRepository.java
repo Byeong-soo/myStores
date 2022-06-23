@@ -34,9 +34,20 @@ public class ItemRepository {
 
     //모델 명으로 검색2(수정필요)
     public List<Item> findAllByModelNumber(String modelNumber) {
-        //language=JPAQL
+
         String jpql = "select i From Item i where i.modelNumber like CONCAT('%',:modelNumber,'%') ";
-        return em.createQuery(jpql).setParameter("modelNumber",modelNumber).getResultList();
+        return em.createQuery(jpql,Item.class).setParameter("modelNumber",modelNumber)
+                .getResultList();
+    }
+
+
+    public List<Item> findAllByModelNumberPaging(String modelNumber,int offset,int limit) {
+
+        String jpql = "select i From Item i where i.modelNumber like CONCAT('%',:modelNumber,'%') ";
+        return em.createQuery(jpql,Item.class).setParameter("modelNumber",modelNumber)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
     }
 
 }
