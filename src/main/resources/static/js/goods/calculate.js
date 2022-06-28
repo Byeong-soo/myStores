@@ -159,7 +159,7 @@ window.onload = function () {
             price18kInput.textContent = standardPrice.toLocaleString("ko-KR");
             price18kStoreInput.textContent = standardStorePrice.toLocaleString("ko-KR");
             mount18kInput.textContent = goldMount;
-            mount18kInput2.textContent = (goldMount/3.75).toString();
+            mount18kInput2.textContent = (Math.ceil((goldMount/3.75)*100)/100).toString();
         }
 
         if (goldKind === '24') {
