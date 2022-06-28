@@ -7,14 +7,17 @@ window.onload = function () {
     let price14kInput = document.getElementById('14kPrice');
     let price14kStoreInput = document.getElementById('14kStorePrice');
     let mount14kInput = document.getElementById('14kMount');
+    let mount14kInput2 = document.getElementById('14kMount2');
 
     let price18kInput = document.getElementById('18kPrice');
     let price18kStoreInput = document.getElementById('18kStorePrice');
     let mount18kInput = document.getElementById('18kMount');
+    let mount18kInput2 = document.getElementById('18kMount2');
 
     let price24kInput = document.getElementById('24kPrice');
     let price24kStoreInput = document.getElementById('24kStorePrice');
     let mount24kInput = document.getElementById('24kMount');
+    let mount24kInput2 = document.getElementById('24kMount2');
 
     let tr14k = document.getElementById('14kTr');
     let tr18k = document.getElementById('18kTr');
@@ -130,10 +133,12 @@ window.onload = function () {
             price14kInput.textContent = standardPrice.toLocaleString("ko-KR");
             price14kStoreInput.textContent = standardStorePrice.toLocaleString("ko-KR");
             mount14kInput.textContent = goldMount;
+            mount14kInput2.textContent = (Math.ceil((goldMount/3.75) * 100)/100).toString();
 
             price18kInput.textContent = convertPrice.toLocaleString("ko-KR");
             price18kStoreInput.textContent = convertStorePrice.toLocaleString("ko-KR");
             mount18kInput.textContent =(Math.ceil(goldMount * 1.15 * 100)/100).toString();
+            mount18kInput2.textContent =(Math.ceil((goldMount * 1.15/3.75) * 100)/100).toString();
         }
 
         if (goldKind === '18') {
@@ -149,10 +154,12 @@ window.onload = function () {
             price14kInput.textContent = convertPrice.toLocaleString("ko-KR");
             price14kStoreInput.textContent = convertStorePrice.toLocaleString("ko-KR");
             mount14kInput.textContent = (Math.ceil(goldMount/1.15*100)/100).toString();
+            mount14kInput2.textContent = (Math.ceil((goldMount/1.15/3.75)*100)/100).toString();
 
             price18kInput.textContent = standardPrice.toLocaleString("ko-KR");
             price18kStoreInput.textContent = standardStorePrice.toLocaleString("ko-KR");
             mount18kInput.textContent = goldMount;
+            mount18kInput2.textContent = (goldMount/3.75).toString();
         }
 
         if (goldKind === '24') {
@@ -166,6 +173,7 @@ window.onload = function () {
             price24kInput.textContent = standardPrice.toLocaleString("ko-KR");
             price24kStoreInput.textContent = standardStorePrice.toLocaleString("ko-KR");
             mount24kInput.textContent = goldMount;
+            mount24kInput2.textContent = (Math.ceil((goldMount/3.75) * 100)/100).toString();
         }
 
 
@@ -193,6 +201,9 @@ window.onload = function () {
     }
 
     function storePriceCalculate(price) {
+        if(price>=1000000){
+            return Math.ceil(price * 1.15/100)*100;
+        }
         return Math.ceil(price * 1.14/100)*100;
     }
 
