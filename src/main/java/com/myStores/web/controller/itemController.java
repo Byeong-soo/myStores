@@ -7,7 +7,7 @@ import com.myStores.domain.item.WagePrice;
 import com.myStores.repository.ItemSearch;
 import com.myStores.service.GoldPriceService;
 import com.myStores.service.ItemService;
-import com.myStores.web.dto.CreateItemDto;
+import com.myStores.web.dto.ItemFormDto;
 import com.myStores.web.dto.SearchItemDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +17,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Slf4j
@@ -69,12 +70,12 @@ public class itemController {
 
     @GetMapping("new")
     public String saveForm(Model model) {
-        model.addAttribute("itemForm", new CreateItemDto());
+        model.addAttribute("itemForm", new ItemFormDto());
         return "form/item/createItemForm";
     }
 
     @PostMapping("new")
-    public String create(@Valid @ModelAttribute("itemForm") CreateItemDto form, BindingResult result) {
+    public String create(@Valid @ModelAttribute("itemForm") ItemFormDto form, BindingResult result) {
 
         if (result.hasErrors()) {
             return "form/item/createItemForm";
@@ -113,9 +114,26 @@ public class itemController {
 
     @GetMapping("/edit/{id}")
     public String updateItemForm(@PathVariable("id")Long id,Model model){
-
-
+        ItemFormDto updateFormDto = itemService.getItemForm(id);
+        model.addAttribute("updateItemId",id);
+        model.addAttribute("updateItemInfo",updateFormDto);
         return  "form/item/updateItemForm";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateItem(@PathVariable Long id,@ModelAttribute("updateItemInfo")ItemFormDto updateItemInfo,Model model){
+
+        String modelNumber = itemService.updateItem(id, updateItemInfo);
+        String encodeModelNumber = URLEncoder.encode(modelNumber, StandardCharsets.UTF_8);
+        return "redirect:/item/search?modelNumber="+encodeModelNumber;
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteItem(@PathVariable Long id){
+
+        itemService.deleteItem(id);
+
+        return "redirect:/item/search";
     }
 
     private void addCookie(HttpServletResponse response, String cookieName) {

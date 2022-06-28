@@ -17,6 +17,11 @@ public class ItemRepository {
         em.persist(item);
     }
 
+    public void delete(Item item){
+        em.remove(item);
+    }
+
+
     public Item findById(Long goodsId){
         return em.find(Item.class,goodsId);
     }

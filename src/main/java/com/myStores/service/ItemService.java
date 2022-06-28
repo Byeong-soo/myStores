@@ -4,6 +4,7 @@ import com.myStores.domain.item.Item;
 import com.myStores.domain.item.ItemWage;
 import com.myStores.domain.item.WagePrice;
 import com.myStores.repository.ItemRepository;
+import com.myStores.web.dto.ItemFormDto;
 import com.myStores.web.dto.PriceInfo;
 import com.myStores.web.dto.SearchItemDto;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,13 @@ public class ItemService {
             throw new IllegalStateException("이미 존재하는 모델입니다.");
         }
     }
+
+    @Transactional
+    public void deleteItem(Long id){
+        Item deleteItem = itemRepository.findById(id);
+        itemRepository.delete(deleteItem);
+    }
+
 
     public Item findById(Long itemId){
         return itemRepository.findById(itemId);
@@ -82,5 +90,18 @@ public class ItemService {
         findItem.changePrice(itemWage,priceInfo.getMargin());
 
         return  new SearchItemDto(findItem);
+    }
+
+    @Transactional
+    public String updateItem(Long updateItemId,ItemFormDto updateItemInfo){
+        Item updateItem = itemRepository.findById(updateItemId);
+        updateItem.updateItemInfo(updateItemInfo);
+        return updateItem.getModelNumber();
+    }
+
+    public ItemFormDto getItemForm(Long findItemId){
+        Item findItem = itemRepository.findById(findItemId);
+
+        return new ItemFormDto(findItem);
     }
 }

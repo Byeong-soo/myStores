@@ -70,4 +70,22 @@ class ItemServiceTest {
         assertEquals(findItems1.size(),2);
         assertEquals(findItems2.size(),3);
     }
+
+    @Test
+    @Transactional
+    public void 삭제() throws Exception {
+        WagePrice wagePrice = new WagePrice(0,1000,1000);
+        ItemWage itemWage = new ItemWage(wagePrice);
+        Item item= new Item("목걸이","부엉이_1","부산공방","123",null,
+                null,1,null,"에메랄드","1","N",null,itemWage,0);
+
+        //when
+        Long saveItemId = itemService.saveItem(item);
+
+        itemService.deleteItem(saveItemId);
+
+
+        //then
+        assertNull(itemService.findById(saveItemId));
+    }
 }
