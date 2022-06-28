@@ -6,7 +6,7 @@ plugins { // (1)
 
 group 'com.myStores'
 version '1.0-SNAPSHOT-'+new Date().format("yyyyMMddHHmmss")
-제sourceCompatibility = 1.11
+sourceCompatibility = 1.11
 
 repositories {
     mavenCentral()
