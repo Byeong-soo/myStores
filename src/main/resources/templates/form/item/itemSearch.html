@@ -52,7 +52,7 @@
                             <img th:src="@{/image/dotoryPhoto/{modelNumber}.jpg (modelNumber=${item.id})}">
                         </div>
 
-                        <a class="item-link"  th:href="@{/items/{id}/edit (id=${item.id})}">
+                        <a class="item-link"  th:href="@{/item/edit/{id} (id=${item.id})}">
                             <div class="row item-link-div">
                                 <div class="item-link-div-content">
                                     <strong th:text="${item.modelNumber}"></strong>
@@ -202,13 +202,6 @@
                             <li th:each="page: ${#numbers.sequence(start, end)}" th:class="${pageNum == page+1}? 'page-item active' : 'page-item'">
                                 <a class="page-link" th:href="@{/item/search (pageNum=${page}+1,modelNumber=${keyWord})}" th:text="${page}+1"></a></li>
                             </li>
-
-<!--                            <li th:class="${pageNum == 1}? 'page-item active' : 'page-item'">-->
-<!--                                <a class="page-link" href="#" th:text="1"></a></li>-->
-<!--                            <li class="page-item"><a class="page-link" href="#" th:text="2"></a></li>-->
-<!--                            <li class="page-item"><a class="page-link" href="#" th:text="3"></a></li>-->
-<!--                            <li class="page-item"><a class="page-link" href="#" th:text="4"></a></li>-->
-<!--                            <li class="page-item"><a class="page-link" href="#" th:text="5"></a></li>-->
 
                             <li class="page-item" th:class="${pageNum eq totalPage}? 'page-item disabled' : 'page-item'">
                                 <a class="page-link" href="#" th:href="@{/item/search/(pageNum=${pageNum}+1,modelNumber=${keyWord})}" aria-label="Next">
