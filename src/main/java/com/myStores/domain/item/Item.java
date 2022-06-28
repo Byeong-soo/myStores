@@ -1,5 +1,6 @@
 package com.myStores.domain.item;
 
+import com.myStores.web.dto.ItemFormDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -82,5 +83,24 @@ public class Item {
     public void changePrice(ItemWage itemWage,int margin) {
         this.itemWage = itemWage;
         this.margin = margin;
+    }
+
+    public void updateItemInfo(ItemFormDto updateItemInfo){
+        this.modelNumber = updateItemInfo.getModelNumber();
+        this.modelKind = updateItemInfo.getModelKind();
+        this.purchaseStore = updateItemInfo.getPurchaseStore();
+        this.manufacturerNumber = updateItemInfo.getManufacturerNumber();
+        this.aboutProduct = updateItemInfo.getAboutProduct();
+        this.setType = updateItemInfo.getSetType();
+        this.basicMount = updateItemInfo.getBasicMount();
+        this.basicColor = updateItemInfo.getBasicColor();
+        this.coreStone = updateItemInfo.getCoreStone();
+        this.stoneQuantity = updateItemInfo.getStoneQuantity();
+        this.discontinued = updateItemInfo.getDiscontinued();
+        this.memo = updateItemInfo.getMemo();
+        this.itemWage = new ItemWage(new WagePrice(updateItemInfo.getBasicWage(),
+                updateItemInfo.getMainWage(),
+                updateItemInfo.getSupportWage()));
+        this.margin = updateItemInfo.getMargin();
     }
 }
