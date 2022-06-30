@@ -49,7 +49,7 @@
                 <ul th:each="item : ${items}">
                     <li class="item-list">
                         <div class="item-photo">
-                            <img th:src="@{/image/dotoryPhoto/{modelNumber}.jpg (modelNumber=${item.id})}">
+                            <img th:src="@{https://mystore-image.s3.ap-northeast-2.amazonaws.com/dotoryPoto/{modelNumber}.jpg (modelNumber=${item.id})}">
                         </div>
 
                         <a class="item-link"  th:href="@{/item/edit/{id} (id=${item.id})}">
