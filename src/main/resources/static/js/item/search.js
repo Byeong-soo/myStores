@@ -161,12 +161,11 @@ window.onload= function () {
       let margin = JSON.parse(itemInfo).margin;
 
 
-      let text = `문의하신 제품 가격 입니다!
-                  14K 기준 ${mount} g/돈 기준
-                  카드 혜택가 ${(goldPrice*mount + sum + margin)*1.14}  금교환 등 최대 할인 ${goldPrice*mount + sum + margin}
-                  
-                  18K 기준 ${mount*1.13} g/돈 기준
-                  카드 혜택가 ${(goldPrice*mount*1.15 + sum + margin)*1.14}  금교환 등 최대 할인 ${goldPrice*mount*1.15 + sum + margin}`
+      let text = `문의하신 제품 가격 입니다!`
+          +`\n14K 기준 ${Math.ceil(mount*100)/100} g/돈 기준`
+          +`\n카드 혜택가 ${Math.ceil((goldPrice*mount + sum + margin)*1.14/100)*100}  금교환 등 최대 할인 ${Math.ceil((goldPrice*mount + sum + margin)/100)*100}`
+          +`\n18K 기준 ${Math.ceil(mount*1.13*100)/100} g/돈 기준`
+          +`\n카드 혜택가 ${Math.ceil((goldPrice*mount*1.13 + sum + margin)*1.14/100)*100}  금교환 등 최대 할인 ${Math.ceil((goldPrice*mount*1.13 + sum + margin)/100)*100}`
 
 
       navigator.clipboard.writeText(text).then(()=>alert("메세지가 복사되었습니다."))
