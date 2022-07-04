@@ -70,9 +70,10 @@ window.onload= function () {
    let copyPhrases = document.getElementsByClassName('copyPhrases');
 
    for (let copyPhrase of copyPhrases) {
-      copyPhrase.addEventListener("click",function () {
+      copyPhrase.addEventListener("click",function (e) {
          let myItemId = copyPhrase.getAttribute("myItemIdCopy");
-         getItemInfoAndGoldPrice(myItemId).then(copy);
+
+         getItemInfoAndGoldPrice(myItemId,e).then(copy);
       })
    }
 
@@ -145,20 +146,25 @@ window.onload= function () {
       priceModal.show();
    }
 
-  async function getItemInfoAndGoldPrice(myItemId) {
+  async function getItemInfoAndGoldPrice(myItemId,e) {
      let itemInfo = await getItemInfo(myItemId);
      let goldPrice = await getGoldPrice();
 
-     let result = {"item":itemInfo,"goldPrice":goldPrice}
+     let result = {"item":itemInfo,"goldPrice":goldPrice,"event":e}
      return result;
    }
 
    function copy(result) {
       let goldPrice = result.goldPrice;
       let itemInfo = result.item;
+      let e = result.event;
       let mount = JSON.parse(itemInfo).basicMount;
       let sum = JSON.parse(itemInfo).sum;
       let margin = JSON.parse(itemInfo).margin;
+
+      let tempTextarea = document.createElement("textarea");
+      document.body.appendChild(tempTextarea);
+
 
 
       let text = `문의하신 제품 가격 입니다!`
@@ -167,8 +173,16 @@ window.onload= function () {
           +`\n18K 기준 ${Math.ceil(mount*1.13*100)/100} g/돈 기준`
           +`\n카드 혜택가 ${Math.ceil((goldPrice*mount*1.13 + sum + margin)*1.14/100)*100}  금교환 등 최대 할인 ${Math.ceil((goldPrice*mount*1.13 + sum + margin)/100)*100}`
 
+      tempTextarea.value = text;
+      tempTextarea.focus();
+      tempTextarea.select();
+      document.execCommand('copy')
+      document.body.removeChild(tempTextarea);
 
-      navigator.clipboard.writeText(text).then(()=>alert("메세지가 복사되었습니다."))
+      // e.clipboardData.setData("text",text);
+      // navigator.clipboard.writeText(text).then(()=>alert("메세지가 복사되었습니다."))
    }
+
+
 
 }
