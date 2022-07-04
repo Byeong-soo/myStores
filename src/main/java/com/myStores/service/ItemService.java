@@ -63,6 +63,11 @@ public class ItemService {
         return findItemList;
     }
 
+    public int countFindAllBySearchWord(String searchWord){
+        List<Item> allBySearchWord = itemRepository.findAllBySearchWord(searchWord);
+        return allBySearchWord.size();
+    }
+
     public List<SearchItemDto> findAllByModelNumberPaging(String modelNumber,int offset,int limit){
 
         List<Item> allByModelNumber = itemRepository.findAllByModelNumberPaging(modelNumber,offset,limit);

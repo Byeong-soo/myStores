@@ -37,7 +37,7 @@ public class itemController {
                              @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
                              Model model) {
 
-        int searchCount = itemService.findAllByModelNumber(itemSearch.getModelNumber()).size();
+        int searchCount = itemService.countFindAllBySearchWord(itemSearch.getModelNumber());
         int totalPage = 0;
         if(searchCount>0){
             if(searchCount%10==0)totalPage = searchCount/10;
