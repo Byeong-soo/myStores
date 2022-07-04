@@ -62,12 +62,12 @@
                                             <div class="me-5">
                                                 <span>14K 가격 :</span>
                                                 <span th:if="${item.basicMount}!=null"
-                                                      th:text="${#numbers.formatInteger(item.basicMount * goldPrice +item.sum+ item.margin,0,'COMMA')}">중량을 설정해주세요</span>
+                                                      th:text="${#numbers.formatInteger(item.basicMount * goldPrice/3.75 * 0.6435 +item.sum+ item.margin,0,'COMMA')}">중량을 설정해주세요</span>
                                             </div>
                                             <div>
                                                 <span>18K 가격 :</span>
                                                 <span th:if="${item.basicMount}!=null"
-                                                      th:text="${#numbers.formatInteger(item.basicMount * 1.13 * goldPrice +item.sum+item.margin,0,'COMMA')}">중량을 설정해주세요</span>
+                                                      th:text="${#numbers.formatInteger(item.basicMount * 1.13 * goldPrice/3.75 * 0.825 +item.sum+item.margin,0,'COMMA')}">중량을 설정해주세요</span>
                                             </div>
                                         </div>
                                         <div th:if="${item.margin==0}">

@@ -155,7 +155,7 @@ window.onload= function () {
    }
 
    function copy(result) {
-      let goldPrice = result.goldPrice;
+      let goldPrice = result.goldPrice/3.75;
       let itemInfo = result.item;
       let e = result.event;
       let mount = JSON.parse(itemInfo).basicMount;
@@ -169,15 +169,17 @@ window.onload= function () {
 
       let text = `문의하신 제품 가격 입니다!`
           +`\n14K 기준 ${Math.ceil(mount*100)/100} g/돈 기준`
-          +`\n카드 혜택가 ${Math.ceil((goldPrice*mount + sum + margin)*1.14/100)*100}  금교환 등 최대 할인 ${Math.ceil((goldPrice*mount + sum + margin)/100)*100}`
+          +`\n카드 혜택가 ${Math.ceil((goldPrice*0.6435*mount + sum + margin)*1.14/100)*100}  금교환 등 최대 할인 ${Math.ceil((goldPrice*0.6435*mount + sum + margin)/100)*100}`
           +`\n18K 기준 ${Math.ceil(mount*1.13*100)/100} g/돈 기준`
-          +`\n카드 혜택가 ${Math.ceil((goldPrice*mount*1.13 + sum + margin)*1.14/100)*100}  금교환 등 최대 할인 ${Math.ceil((goldPrice*mount*1.13 + sum + margin)/100)*100}`
+          +`\n카드 혜택가 ${Math.ceil((goldPrice*0.825*mount*1.13 + sum + margin)*1.14/100)*100}  금교환 등 최대 할인 ${Math.ceil((goldPrice*0.825*mount*1.13 + sum + margin)/100)*100}`
 
       tempTextarea.value = text;
       tempTextarea.focus();
       tempTextarea.select();
       document.execCommand('copy')
       document.body.removeChild(tempTextarea);
+
+      alert("메세지가 복사되었습니다.")
 
       // e.clipboardData.setData("text",text);
       // navigator.clipboard.writeText(text).then(()=>alert("메세지가 복사되었습니다."))
