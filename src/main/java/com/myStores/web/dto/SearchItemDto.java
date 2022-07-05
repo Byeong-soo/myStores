@@ -18,18 +18,12 @@ public class SearchItemDto {
     private int supportWage;
 
     private int sum;
+    private int price14k;
+    private int price18k;
 
-//    public SearchItemDto(Long id, String modelNumber, Double basicMount, int margin, String memo, int basicWage, int mainWage, int supportWage, int sum) {
-//        this.id = id;
-//        this.modelNumber = modelNumber;
-//        this.basicMount = basicMount;
-//        this.margin = margin;
-//        this.memo = memo;
-//        this.basicWage = basicWage;
-//        this.mainWage = mainWage;
-//        this.supportWage = supportWage;
-//        this.sum = sum;
-//    }
+    private int price14kCard;
+    private int price18kCard;
+
 
     public SearchItemDto(Item item){
         this.id = item.getId();
@@ -41,6 +35,24 @@ public class SearchItemDto {
         this.mainWage = item.getItemWage().getWagePrice().getMain();
         this.supportWage = item.getItemWage().getWagePrice().getSupport();
         this.sum = item.getItemWage().getWagePrice().getSum();
+    }
+
+    public void saveTotalPrice(SearchItemDto searchItemDto,int marketPrice){
+        searchItemDto.price14k =(int) Math.round((searchItemDto.basicMount * marketPrice / 3.75 * 0.6435 + searchItemDto.sum + searchItemDto.margin) / 1000) * 1000;
+        searchItemDto.price18k =(int) Math.round((searchItemDto.basicMount * 1.13 * marketPrice / 3.75 * 0.825 + searchItemDto.sum + searchItemDto.margin) / 1000) * 1000;
+
+        if(searchItemDto.price14k>=1000000){
+            searchItemDto.price14kCard =(int) Math.round((searchItemDto.getPrice14k() * 1.15)/1000)*1000;
+        } else{
+            searchItemDto.price14kCard =(int) Math.round((searchItemDto.getPrice14k() * 1.14)/1000)*1000;
+        }
+
+        if(searchItemDto.price18k>=1000000){
+            searchItemDto.price18kCard =(int) Math.round((searchItemDto.getPrice18k() * 1.15)/1000)*1000;
+        } else{
+            searchItemDto.price18kCard =(int) Math.round((searchItemDto.getPrice18k() * 1.14)/1000)*1000;
+        }
+
     }
 
 }

@@ -55,6 +55,9 @@ public class itemController {
         if(latestPrice != null){
             model.addAttribute("searchCount",searchCount);
             model.addAttribute("goldPrice", latestPrice.getPrice());
+            for (SearchItemDto findItem : findItems) {
+                findItem.saveTotalPrice(findItem,latestPrice.getPrice());
+            }
         }
         model.addAttribute("keyWord",itemSearch.getModelNumber());
         model.addAttribute("pageNum",pageNum);

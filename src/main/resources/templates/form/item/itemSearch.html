@@ -13,7 +13,7 @@
 
 <body>
 <section class="row justify-content-center flex-fill">
-    <div class="col-lg-8 col-md-10 m-lg-5 m-md-1 m-sm-5 bg-white shadow rounded">
+    <div class="col-lg-10 col-md-10 m-lg-5 m-md-1 m-sm-5 bg-white shadow rounded">
 
         <div class="text-center m-5 pt-2">
             <span class="fs-2">제품 검색</span>
@@ -59,19 +59,29 @@
                                     <p class="item-memo" th:if="${item.memo!=null}" th:text="${item.memo}"></p>
                                     <div class="d-flex justify-content-between">
                                         <div class="d-flex">
-                                            <div class="me-5">
+                                            <div class="me-4">
                                                 <span>14K 가격 :</span>
                                                 <span th:if="${item.basicMount}!=null"
-                                                      th:text="${#numbers.formatInteger(item.basicMount * goldPrice/3.75 * 0.6435 +item.sum+ item.margin,0,'COMMA')}">중량을 설정해주세요</span>
+                                                      th:text="${#numbers.formatInteger(item.price14k,0,'COMMA')} + ' 원'">중량을 설정해주세요</span>
                                             </div>
-                                            <div>
+                                            <div class="me-4">
+                                                <span>14K 카드 가격 :</span>
+                                                <span th:if="${item.basicMount}!=null"
+                                                      th:text="${#numbers.formatInteger(item.price14kCard,0,'COMMA')}+ ' 원'">중량을 설정해주세요</span>
+                                            </div>
+                                            <div th:class="me-4">
                                                 <span>18K 가격 :</span>
                                                 <span th:if="${item.basicMount}!=null"
-                                                      th:text="${#numbers.formatInteger(item.basicMount * 1.13 * goldPrice/3.75 * 0.825 +item.sum+item.margin,0,'COMMA')}">중량을 설정해주세요</span>
+                                                      th:text="${#numbers.formatInteger(item.price18k,0,'COMMA')}+ ' 원'">중량을 설정해주세요</span>
+                                            </div>
+                                            <div>
+                                                <span>18K 카드 가격 :</span>
+                                                <span th:if="${item.basicMount}!=null"
+                                                      th:text="${#numbers.formatInteger(item.price18kCard,0,'COMMA')}+ ' 원'">중량을 설정해주세요</span>
                                             </div>
                                         </div>
                                         <div th:if="${item.margin==0}">
-                                            <span class="text-danger">*이윤이 0으로 설정되어있습니다.</span>
+                                            <span class="text-danger">*이윤이 0원 입니다.</span>
                                         </div>
                                     </div>
                                 </div>
