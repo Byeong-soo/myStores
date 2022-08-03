@@ -204,7 +204,7 @@ window.onload = function () {
         if(price>=1000000){
             return Math.ceil(price * 1.15/100)*100;
         }
-        return Math.ceil(price * 1.14/100)*100;
+        return Math.ceil(price * 1.15/100)*100;
     }
 
     //--------------------입력 제한 ----------------------
